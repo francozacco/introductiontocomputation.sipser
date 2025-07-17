@@ -1,0 +1,310 @@
+\documentclass[11pt]{article}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+\usepackage{amsmath, physics}
+\usepackage{bm}
+\usepackage{adjustbox}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage[mathscr]{euscript}
+\usepackage{tikz}
+\usepackage{float}
+
+\usetikzlibrary{automata, positioning, arrows}
+\tikzset{
+->, % makes the edges directed
+>=stealth', % makes the arrow heads bold
+node distance=3cm, % specifies the minimum distance between two nodes. Change if necessary.
+every state/.style={thick, fill=gray!10}, % sets the properties for each ’state’ node
+initial text=$ $, % sets the text that appears on the start arrow
+}
+
+\title{\textbf{Solved selected problems of Introduction to the Theory of Computation by Michael Sipser.}}
+\author{Franco Zacco}
+\date{}
+
+\addtolength{\topmargin}{-3cm}
+\addtolength{\textheight}{3cm}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\diam}{\text{diam}}
+\newcommand{\cl}{\text{cl}}
+\newcommand{\bdry}{\text{bdry}}
+\newcommand{\inter}{\text{int}}
+\newcommand{\hatx}{\bm{\hat{x}}}
+\newcommand{\haty}{\bm{\hat{y}}}
+\newcommand{\hatz}{\bm{\hat{z}}}
+\newcommand{\hatrho}{\bm{\hat{\rho}}}
+\newcommand{\hatphi}{\bm{\hat{\phi}}}
+\newcommand{\hatr}{\bm{\hat{r}}}
+\newcommand{\hattheta}{\bm{\hat{\theta}}}
+\newcommand{\esp}{\text{\textvisiblespace}\hspace{0.1em}}
+
+\theoremstyle{definition}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\section*{3 The Church-Turing Thesis}
+\subsection*{3.1 Turing Machines}
+
+\begin{proof}{\textbf{3.1}}
+\begin{itemize}
+    \item [\textbf{a.}]
+    \begin{align*}
+        &q_1 0 \esp\\
+        &\esp q_2 \esp\\
+        &\esp \esp q_{\text{accept}}
+    \end{align*}
+    \item [\textbf{b.}]
+    \[
+    \begin{aligned}
+        &q_1 0 0 \esp     &  &\esp q_2 x \esp\\
+        &\esp q_2 0 \esp  &  &\esp x q_2\esp\\
+        &\esp x q_3 \esp  &  &\esp x \esp q_{\text{accept}}\\
+        &\esp q_5 x \esp  & \\
+        &q_5 \esp x \esp  & \\
+    \end{aligned}
+    \]
+    \item [\textbf{c.}]
+    \[
+    \begin{aligned}
+        &q_1 0 0 0\esp      & \\
+        &\esp q_2 0 0\esp   & \\
+        &\esp x q_3 0 \esp  & \\
+        &\esp x 0 q_4 \esp  & \\
+        &\esp x 0 \esp q_{\text{reject}}
+    \end{aligned}
+    \]
+    \item [\textbf{d.}] 
+    \[
+    \begin{aligned}
+        &q_1 0 0 0 0 0 0\esp    & &\esp x 0 x 0 q_5 x \esp & &\esp x q_2 0 x 0 x \esp \\
+        &\esp q_2 0 0 0 0 0\esp & &\esp x 0 x q_5 0 x \esp & &\esp x x q_3 x 0 x \esp \\
+        &\esp x q_3 0 0 0 0\esp & &\esp x 0 q_5 x 0 x \esp & &\esp x x x q_3 0 x \esp \\
+        &\esp x 0 q_4 0 0 0\esp & &\esp x q_5 0 x 0 x \esp & &\esp x x x 0 q_4 x \esp \\
+        &\esp x 0 x q_3 0 0\esp & &\esp q_5 x 0 x 0 x \esp & &\esp x x x 0 x q_4 \esp \\
+        &\esp x 0 x 0 q_4 0\esp & &q_5 \esp x 0 x 0 x \esp & &\esp x x x 0 x \esp q_{\text{reject}} \\
+        &\esp x 0 x 0 x q_3\esp & &\esp q_2 x 0 x 0 x \esp \\
+    \end{aligned}
+    \]
+\end{itemize}
+\end{proof}
+\begin{proof}{\textbf{3.2}}
+    \begin{itemize}
+        \item [\textbf{a.}]
+        \begin{align*}
+            &q_1 11 \esp\\
+            &x q_3 1 \esp\\
+            &x 1 q_3 \esp\\
+            &x 1 \esp q_{\text{reject}}
+        \end{align*}
+        \item [\textbf{b.}]
+        \[
+        \begin{aligned}
+            & q_1 1 \# 1 \esp     &  & x q_1 \# x \esp\\
+            & x q_3 \# 1 \esp     &  & x \# q_8 x \esp\\
+            & x \# q_5 1 \esp     &  & x \# x q_8 \esp\\
+            & x q_6 \# x \esp     &  & x \# x \esp q_{\text{accept}}\\
+            & q_7 x \# x \esp
+        \end{aligned}
+        \]
+        \item [\textbf{c.}]
+        \[
+        \begin{aligned}
+            & q_1 1 \# \# 1 \esp\\
+            & x q_3 \# \# 1 \esp\\
+            & x \# q_5 \# \esp\\
+            & x \# \# q_{\text{reject}}\esp
+        \end{aligned}
+        \]
+        \item [\textbf{d.}] 
+        \[
+        \begin{aligned}
+            & q_1 1 0 \# 1 1 \esp  &  & x q_1 0 \# x 1 \esp\\
+            & x q_3 0 \# 1 1 \esp  &  & x x q_2 \# x 1 \esp\\
+            & x 0 q_3 \# 1 1 \esp  &  & x x \# q_4 x 1 \esp\\
+            & x 0 \# q_5 1 1 \esp  &  & x x \# x q_4 1 \esp\\
+            & x 0 q_6 \# x 1 \esp  &  & x x \# x 1 q_{\text{reject}}\esp\\
+            & x q_7 0 \# x 1 \esp  &  & \\
+            & q_7 x 0 \# x 1 \esp  &  & 
+        \end{aligned}
+        \]
+        \item [\textbf{e.}] 
+        \[
+        \begin{aligned}
+            & q_1 1 0 \# 1 0 \esp  &  & x q_1 0 \# x 0 \esp  &  & x x q_1 \# x x \esp\\
+            & x q_3 0 \# 1 0 \esp  &  & x x q_2 \# x 0 \esp  &  & x x \# q_8 x x \esp\\
+            & x 0 q_3 \# 1 0 \esp  &  & x x \# q_4 x 0 \esp  &  & x x \# x q_8 x \esp\\
+            & x 0 \# q_5 1 0 \esp  &  & x x \# x q_4 0 \esp  &  & x x \# x x q_8 \esp\\
+            & x 0 q_6 \# x 0 \esp  &  & x x \# q_6 x x \esp  &  & x x \# x x \esp q_{\text{accept}}\\
+            & x q_7 0 \# x 0 \esp  &  & x x q_6 \# x x \esp\\
+            & q_7 x 0 \# x 0 \esp  &  & x q_7 x \# x x \esp
+        \end{aligned}
+        \]
+    \end{itemize}
+\end{proof}
+
+\cleardoublepage
+\begin{proof}{\textbf{3.3}}
+\begin{itemize}
+    \item [($\Rightarrow$)] If a language $L$ is decidable then there is a
+    deterministic Turing machine which decides it, but this machine is
+    nondeterministic as well so there is a nondeterministic Turing machine
+    which decides $L$.
+
+    \item [($\Leftarrow$)]
+    We will use the proof to Theorem 3.16 to prove that every nondeterministic
+    Turing machine that decides a language has an equivalent deterministic
+    Turing machine that decides the language.
+
+    Suppose there is some nondeterministic Turing machine $N$ that decides a
+    language $L$.
+    
+    We need a multitape deterministic Turing machine $D$ where
+    as we did in Theorem 3.16, the first tape (input tape) contains the input
+    string, the second tape (simulation tape) contains a copy of $N$'s tape on
+    some branch of its nondeterministic computation, and tape 3 (address tape)
+    keeps track of $D$'s location in $N$'s nondeterministic finite computation
+    tree.
+
+    Then $D$ is described as follows
+    \begin{itemize}
+    \item [\textbf{1.}] Initially tape 1 contains the input $w$, and tapes 2
+    and 3 are empty.
+    \item [\textbf{2.}] Copy tape 1 to tape 2.
+    \item [\textbf{3.}] Use tape 2 to simulate $N$ with input $w$ on one branch
+    of its nondeterministic computation.
+    Before each step of $N$ consult the next symbol on tape 3 to determine
+    which choice to make among those allowed by $N$'s transition function.
+    If no more symbols remain on tape 3 or if this nondeterministic choice is
+    invalid, abort this branch by going to stage 4.
+    Also, go to stage 4 if a rejecting configuration is encountered.
+    If an accepting configuration is encountered, accept the input.
+    \item [\textbf{4.}] Replace the string on tape 3 with the lexicographically
+    next string.
+    Simulate the next branch of $N$'s computation by going to stage 2.
+    \item [\textbf{5.}] If we tried every possible string on tape 3 and we
+    didn't reach any accept configuration, then reject the input.
+    \end{itemize}
+    Therefore, since $D$ cannot loop forever because $N$'s tree is finite and
+    hence we must reach an accept or reject state then we get a deterministic
+    Turing machine that decides the language $L$ i.e. the language is
+    decidable.
+\end{itemize}
+\end{proof}
+
+\cleardoublepage
+\begin{proof}{\textbf{3.4}}\\
+An \textbf{enumerator} is a 7-tuple,
+$(Q, \Sigma ,\Gamma,\delta, q_0,q_{accept}, q_{reject})$, where
+$Q, \Sigma, \Gamma$ are all finite sets and
+\begin{itemize}
+\item [\textbf{1.}] $Q$ is the set of states,
+\item [\textbf{2.}] $\Sigma$ is the input alphabet,
+\item [\textbf{3.}] $\Gamma$ is the printer alphabet,
+\item [\textbf{4.}] $\delta: Q \times \Sigma \to Q \times \Sigma
+\times \mathcal{P}(\Gamma)$ is the transition function,
+\item [\textbf{5.}] $q_0 \in Q$ is the start state,
+\item [\textbf{6.}] $q_{accept} \in Q$ is the accept state, and
+\item [\textbf{7.}] $q_{reject} \in Q$ id the reject state, where
+$q_{reject} \neq q_{accept}$.
+\end{itemize}
+An enumerated language $L$ is the language that an enumerator $E$ prints out
+hence $L \subset \mathcal{P}(\Gamma)$.
+\end{proof}
+
+\cleardoublepage
+\begin{proof}{\textbf{3.5}}
+\begin{itemize}
+\item [\textbf{a.}] Given that the transition function is defined as
+$\delta: Q \times \Gamma \to Q \times \Gamma \times \{L,R\}$ and 
+$\esp \in \Gamma$ then a Turing Machine can write $\esp$ on its tape.
+
+\item [\textbf{b.}] No, the tape alphabet $\Gamma$ cannot be the same as the
+input alphabet $\Sigma$ since by definition $\esp \in \Gamma$ but
+$\esp \not\in \Sigma$.
+
+\item [\textbf{c.}] Yes, this could happen when the head is on the leftmost
+square of the tape, then if the transtion function asks the head to go to the
+left the head will stay where it is hence the head will be in the same location
+in two successive steps.
+
+\item [\textbf{d.}] No, a turing machine by definition contains at least
+$q_{reject}$ and $q_{start}$ where $q_{reject} \neq q_{accept}$.
+\end{itemize}
+\end{proof}
+\begin{proof}{\textbf{3.7}}
+The machine $M_{bad}$ is not a legitimate Turing machine for two reasons.
+
+First, given that the machine tries all possible settings of $x_1, ..., x_k$
+to integer values, we must store these integer values somehow, but a Turing
+machine can only have finite alphabets $\Gamma$ and $\Sigma$.
+
+Finally, this machine may not halt, because the polynomial may not be solvable,
+and hence we may loop forever.
+\end{proof}
+
+\cleardoublepage
+\begin{proof}{\textbf{3.8}}
+\begin{itemize}
+    \item [\textbf{a.}]
+    $M_1 = \{w~|~w \text{ contains an equal number of 0s and 1s}\}$\\
+    On input string $w$:
+    \begin{itemize}
+        \item [\textbf{1.}] Scan the first element of the tape from left to
+        right if it's a 0 then cross it off and continue scanning the tape
+        until you find a 1 and cross it off. If the first element is a 1 then
+        cross it off and continue scanning the tape until you find a 0 and
+        cross it off.
+        \item [\textbf{2.}] If you reach the end of the tape (a symbol $\esp$)
+        and you do not find either a 1 or a 0 depending on the case you are
+        in, then reject.
+        \item [\textbf{3.}] Return to the second element and repeat the process
+        described in \textbf{1.} and \textbf{2.}
+        Do this for all slots in the tape.
+        If you encounter a crossed-off element on the tape continue to the
+        next slot.
+        \item [\textbf{4.}] If there are no more slots with 0s or 1s then
+        accept, otherwise reject.
+    \end{itemize}
+    \item [\textbf{b.}]
+    $M_2 = \{w~|~w \text{ contains twice as many 0s as 1s}\}$\\
+    On input string $w$:
+    \begin{itemize}
+        \item [\textbf{1.}] Scan the tape from left to right until you find a 1.
+        If there are no 1s but there are 0s, reject. Cross off the 1 you found.
+        \item [\textbf{2.}] Return to the head of the tape and scan from left
+        to right until you find a 0 and cross it off, continue scanning until
+        you find another 0 and cross it off. If while trying to execute this
+        step there are no more 0s, reject.
+        \item [\textbf{3.}] Continue the process described in \textbf{1.} and
+        \textbf{2.} for every 1 you find. If there are no more 1s but there are
+        still 0s, reject. If while executing this step there are no more 0s and
+        1s. accept.
+    \end{itemize}
+    \item [\textbf{c.}]
+    $M_2 = \{w~|~w \text{ does not contain twice as many 0s as 1s}\}$\\
+    On input string $w$:
+    \begin{itemize}
+        \item [\textbf{1.}] Scan the tape from left to right until you find a 1.
+        If there are no 1s but there are 0s, accept. Cross off the 1 you found.
+        \item [\textbf{2.}] Return to the head of the tape and scan from left
+        to right until you find a 0 and cross it off, continue scanning until
+        you find another 0 and cross it off. If while trying to execute this
+        step there are no more 0s you can cross off, accept.
+        \item [\textbf{3.}] Continue the process described in \textbf{1.} and
+        \textbf{2.} for every 1 you find. If there are no more 1s but there are
+        still 0s, accept. If while executing this step there are no more 0s and
+        1s. reject.
+    \end{itemize}
+\end{itemize}
+\end{proof}
+
+\end{document}
